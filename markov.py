@@ -10,7 +10,7 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-    contents = open("green-eggs.txt").read()
+    contents = open("GoT.txt").read()
     return contents
 
 
@@ -64,7 +64,7 @@ def make_text(chains):
     # get first key by choosing from keys in dict
     our_key = choice(chains.keys())
 
-    while our_key != ('I', 'am?'):
+    while our_key != ('horrors', 'beyond.'):
         # randomly select from value list using choice()
         value = choice(chains[our_key])
         #unpack key tuple into 2 values
@@ -79,7 +79,7 @@ def make_text(chains):
     return " ".join(words)
 
 
-input_path = "green-eggs.txt"
+input_path = "GoT.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
