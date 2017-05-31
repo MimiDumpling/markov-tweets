@@ -14,7 +14,7 @@ def open_and_read_file(file_path):
     return contents
 
 
-def make_chains(text_list):
+def make_chains(text_list, number_of_grams):
     """Takes input text as string; returns dictionary of markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -25,7 +25,7 @@ def make_chains(text_list):
 
         >>> chains = make_chains("hi there mary hi there juanita")
 
-    Each bigram (except the last) will be a key in chains:
+    Each ngram (except the last) will be a key in chains:
 
         >>> sorted(chains.keys())
         [('hi', 'there'), ('mary', 'hi'), ('there', 'mary')]
@@ -38,20 +38,23 @@ def make_chains(text_list):
 
     chains = {}
     index = 0
+    n = int(number_of_grams)
+    ngram = []
     text_list = text_list.split()
 
     while index < (len(text_list) - 2):
 
-        for word in range(len(text_list) - 2):
+        for num in range(n):
+            ngram.append(text_list[index + num])
 
-            bigram = text_list[index], text_list[index + 1]
+        ngram = tuple(ngram)
 
-            if bigram not in chains:
-                chains[bigram] = [text_list[index + 2]]
-            else:
-                chains[bigram].append(text_list[index + 2])
+        if ngram not in chains:
+            chains[ngram] = [text_list[index + 2]]
+        else:
+            chains[ngram].append(text_list[index + 2])
 
-            index += 1
+        index += 1
 
     return chains
 
@@ -85,7 +88,7 @@ input_path = "GoT.txt"
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 3)
 
 # Produce random text
 random_text = make_text(chains)
