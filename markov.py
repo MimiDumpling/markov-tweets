@@ -6,7 +6,6 @@ from random import choice
 
 def open_and_read_file(file_path):
     """Takes file path as string; returns text as string.
-
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
@@ -14,45 +13,33 @@ def open_and_read_file(file_path):
     return contents
 
 
-def make_chains(text_list, number_of_grams):
+def make_chains(text_list):
     """Takes input text as string; returns dictionary of markov chains.
-
     A chain will be a key that consists of a tuple of (word1, word2)
     and the value would be a list of the word(s) that follow those two
     words in the input text.
-
     For example:
-
         >>> chains = make_chains("hi there mary hi there juanita")
-
-    Each ngram (except the last) will be a key in chains:
-
+    Each bigram (except the last) will be a key in chains:
         >>> sorted(chains.keys())
         [('hi', 'there'), ('mary', 'hi'), ('there', 'mary')]
-
     Each item in chains is a list of all possible following words:
-
         >>> chains[('hi', 'there')]
         ['mary', 'juanita']
     """
 
     chains = {}
     index = 0
-    n = int(number_of_grams)
-    ngram = []
     text_list = text_list.split()
 
     while index < (len(text_list) - 2):
 
-        for num in range(n):
-            ngram.append(text_list[index + num])
+        bigram = text_list[index], text_list[index + 1]
 
-        ngram = tuple(ngram)
-
-        if ngram not in chains:
-            chains[ngram] = [text_list[index + 2]]
+        if bigram not in chains:
+            chains[bigram] = [text_list[index + 2]]
         else:
-            chains[ngram].append(text_list[index + 2])
+            chains[bigram].append(text_list[index + 2])
 
         index += 1
 
@@ -88,7 +75,7 @@ input_path = "GoT.txt"
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text, 3)
+chains = make_chains(input_text)
 
 # Produce random text
 random_text = make_text(chains)
