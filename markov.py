@@ -61,36 +61,22 @@ def make_text(chains):
 
     words = []
 
+    # get first key by choosing from keys in dict
     our_key = choice(chains.keys())
-    our_values = chains[our_key]
-    value = choice(chains[our_key])
 
-    # pull the items out of the tuple add them as strings to words
-    key1, key2 = our_key
+    while our_key != ('I', 'am?'):
+        # randomly select from value list using choice()
+        value = choice(chains[our_key])
+        #unpack key tuple into 2 values
+        key1, key2 = our_key
+        # make new key from key2 and the value
+        our_key = (key2, value)
+        # append key and value to words
+        words.append(key1)
+        words.append(key2)
+        words.append(value)
 
-    words.append(key1)
-    words.append(key2)
-    words.append(value)
-
-    # new_key = words[1], value
-    # print new_key
-    # words = [our_key + value]
-
-    print our_key
-    print our_values
-    print value
-    print words
-    print key1
-    print key2
-    # put the key in the container words
-    # use the key to get the value from the dict
-    # randomly select from value list using random.choice()
-    # append that value to words
-    # make new key from words[1] and the value
-    # repeat
-
-
-    # return " ".join(words)
+    return " ".join(words)
 
 
 input_path = "green-eggs.txt"
